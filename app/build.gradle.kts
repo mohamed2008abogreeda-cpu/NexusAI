@@ -80,8 +80,8 @@ dependencies {
     implementation("net.zetetic:android-database-sqlcipher:4.5.4")
     implementation("androidx.sqlite:sqlite-ktx:2.4.0")
 
-    // Node.js Mobile
-    implementation("io.github.nodejs-mobile:nodejs-mobile-android:0.3.0")
+    // Node.js Mobile (Not available on Maven. Native binaries must be added manually)
+    // implementation("io.github.nodejs-mobile:nodejs-mobile-android:0.3.0")
 
     // Markwon for Markdown Parsing
     val markwonVersion = "4.6.2"
