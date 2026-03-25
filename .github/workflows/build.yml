@@ -19,16 +19,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Cache Gradle packages
-      uses: actions/cache@v4
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
       with:
-        path: ~/.gradle/caches
-        key: \${{ runner.os }}-gradle-\${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          \${{ runner.os }}-gradle-
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+        gradle-version: '8.7'
 
     - name: Set up Node.js for Internal Engine
       uses: actions/setup-node@v4
@@ -42,7 +36,7 @@ jobs:
 
 
     - name: Build Debug & Release APK
-      run: ./gradlew assembleDebug assembleRelease
+      run: gradle assembleDebug assembleRelease
 
     - name: Upload Debug APK Artifact
       uses: actions/upload-artifact@v4
