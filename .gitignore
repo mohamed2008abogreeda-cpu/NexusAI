@@ -1,0 +1,8 @@
+node_modules/
+/build
+/app/build
+/.gradle
+/.idea
+*.iml
+local.properties
+.DS_Store
