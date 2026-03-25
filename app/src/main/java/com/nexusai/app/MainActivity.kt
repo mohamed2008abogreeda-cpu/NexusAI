@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
+import com.nexusai.app.ui.chat.ChatScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -31,6 +32,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NexusAppEntry() {
-    // Temporary entry point until routing is set up
-    Text(text = "NexusAI: Embedded Gemini CLI Ready")
+    ChatScreen(
+        messages = listOf("Welcome to NexusAI!", "I am ready to assist you today. How can I help?"),
+        isStreaming = false,
+        onSendMessage = { text -> /* TODO: Implementation pending */ }
+    )
 }
