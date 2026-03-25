@@ -7,10 +7,13 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+import androidx.hilt.work.HiltWorker
+
 /**
  * Periodic WorkManager task to silently update the embedded @google/gemini-cli
  * ensuring the internal node environment always has the latest tools and models.
  */
+@HiltWorker
 class CliUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters
