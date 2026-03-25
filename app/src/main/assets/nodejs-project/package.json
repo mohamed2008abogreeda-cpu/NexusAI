@@ -1,0 +1,9 @@
+{
+  "name": "nexusai-internal-engine",
+  "version": "1.0.0",
+  "description": "Internal Node.js engine running directly inside Android via nodejs-mobile",
+  "main": "main.js",
+  "dependencies": {
+    "@google/gemini-cli": "latest"
+  }
+}
