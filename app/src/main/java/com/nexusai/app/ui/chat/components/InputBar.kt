@@ -86,7 +86,7 @@ fun AnimatedInputBar(
 
             // Animated Send / Voice / Stop Button Transition
             Box(contentAlignment = Alignment.Center, modifier = Modifier.size(48.dp)) {
-                AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                     visible = isStreaming,
                     enter = fadeIn() + slideInVertically(initialOffsetY = { 20 }),
                     exit = fadeOut() + slideOutVertically(targetOffsetY = { 20 })
@@ -97,7 +97,7 @@ fun AnimatedInputBar(
                     }
                 }
 
-                AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                     visible = !isStreaming && !canSend,
                     enter = fadeIn(spring(stiffness = Spring.StiffnessMedium)),
                     exit = fadeOut()
@@ -111,7 +111,7 @@ fun AnimatedInputBar(
                     }
                 }
 
-                AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                     visible = !isStreaming && canSend,
                     enter = fadeIn() + slideInVertically(spring(dampingRatio = Spring.DampingRatioMediumBouncy), initialOffsetY = { 40 }),
                     exit = fadeOut()
