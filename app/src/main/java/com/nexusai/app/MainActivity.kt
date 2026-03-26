@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import com.nexusai.app.ui.chat.ChatScreen
+import com.nexusai.app.auth.AuthManager
+import com.nexusai.app.auth.KeystoreHelper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,9 +42,34 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NexusAppEntry() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val authManager = remember { AuthManager(context, KeystoreHelper()) }
+    var showLoginPrompt by remember { mutableStateOf(true) }
+
     val messages = remember { mutableStateListOf("Welcome to NexusAI!", "I am ready to assist you today. (Node Engine is currently standby)") }
     var isStreaming by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
+
+    if (showLoginPrompt) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showLoginPrompt = false },
+            title = { androidx.compose.material3.Text("Connect to Google") },
+            text = { androidx.compose.material3.Text("Please connect your Google Account to enable NexusAI's Gemini features.") },
+            confirmButton = {
+                androidx.compose.material3.TextButton(onClick = {
+                    showLoginPrompt = false
+                    authManager.startOAuthFlow()
+                }) {
+                    androidx.compose.material3.Text("Connect Gmail")
+                }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { showLoginPrompt = false }) {
+                    androidx.compose.material3.Text("Skip")
+                }
+            }
+        )
+    }
 
     ChatScreen(
         messages = messages,
