@@ -11,6 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import com.nexusai.app.ui.chat.ChatScreen
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -32,9 +40,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NexusAppEntry() {
+    val messages = remember { mutableStateListOf("Welcome to NexusAI!", "I am ready to assist you today. (Node Engine is currently standby)") }
+    var isStreaming by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
     ChatScreen(
-        messages = listOf("Welcome to NexusAI!", "I am ready to assist you today. How can I help?"),
-        isStreaming = false,
-        onSendMessage = { text -> /* TODO: Implementation pending */ }
+        messages = messages,
+        isStreaming = isStreaming,
+        onSendMessage = { text ->
+            if (text.isNotBlank()) {
+                messages.add(text)
+                isStreaming = true
+                coroutineScope.launch {
+                    delay(1500)
+                    messages.add("Echo: $text\n\n*(Full Gemini engine integration pending)*")
+                    isStreaming = false
+                }
+            }
+        }
     )
 }
